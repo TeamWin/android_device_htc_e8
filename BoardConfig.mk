@@ -52,9 +52,10 @@ TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom user_debug=31 ehci-hcd.park=3 zcache androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_SEPARATED_DT := true
+#BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02008000 --dt device/htc/e8/recovery/kernel/dt.img --tags_offset 0x01e00000
-BOARD_CUSTOM_BOOTIMG_MK := device/htc/e8/recovery/kernel/mkbootimg.mk
+#BOARD_CUSTOM_BOOTIMG_MK := device/htc/e8/recovery/kernel/mkbootimg.mk
+BOARD_NEEDS_LZMA_MINIGZIP := true
 
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 274464768
@@ -72,18 +73,17 @@ BOARD_RECOVERY_SWIPE := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 BOARD_USES_MMCUTILS := true
 TARGET_PREBUILT_KERNEL := device/htc/e8/recovery/kernel/kernel
-TARGET_RECOVERY_INITRC := device/htc/e8/recovery/etc/init.rc
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+TARGET_RECOVERY_DEVICE_MODULES := chargeled
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 
 # TWRP Build Flags
-BOARD_RECOVERY_BLDRMSG_OFFSET := 2048
-DEVICE_RESOLUTION := 1080x1920
+COMMON_GLOBAL_CPPFLAGS += -DBOARD_RECOVERY_BLDRMSG_OFFSET=2048
+TW_THEME := portrait_hdpi
 TW_INCLUDE_DUMLOCK := true
 TW_INCLUDE_CRYPTO := true
 TW_NO_SCREEN_BLANK := true
 
 # Vendor Init
+TARGET_INIT_VENDOR_LIB := libinit_$(TARGET_DEVICE)
 TARGET_UNIFIED_DEVICE := true
-TARGET_INIT_VENDOR_LIB := libinit_msm
-TARGET_LIBINIT_DEFINES_FILE := device/htc/e8/init/init_e8.c

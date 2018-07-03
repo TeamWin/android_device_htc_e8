@@ -19,19 +19,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 $(call inherit-product-if-exists, vendor/htc/e8-common/e8-common-vendor.mk)
 
-# Ramdisk
-PRODUCT_PACKAGES += \
-    fstab.qcom \
-    init.qcom.rc \
-    init.qcom.usb.rc \
-    ueventd.qcom.rc
-
 # Recovery
-PRODUCT_PACKAGES += \
-    chargeled \
-    init.recovery.qcom.rc \
-    offmode_charging_res_images \
-    offmode_charging_warn_res_images \
-    dt.img
 PRODUCT_COPY_FILES += \
     bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
