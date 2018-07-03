@@ -34,6 +34,8 @@
 #include "log.h"
 #include "util.h"
 
+#include "init_htcCommon.h"
+
 void common_properties()
 {
     property_set("rild.libargs", "-d /dev/smd0");
@@ -64,19 +66,18 @@ void gsm_properties(char default_network[])
     property_set("telephony.lteOnGsmDevice", "1");
 }
 
-void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *board_type)
+void vendor_load_properties()
 {
     char platform[PROP_VALUE_MAX];
     char bootmid[PROP_VALUE_MAX];
     char device[PROP_VALUE_MAX];
-    char devicename[PROP_VALUE_MAX];
     int rc;
 
-    rc = property_get("ro.board.platform", platform);
+    rc = property_get_sdk23("ro.board.platform", platform);
     if (!rc || strncmp(platform, ANDROID_TARGET, PROP_VALUE_MAX))
         return;
 
-    property_get("ro.boot.mid", bootmid);
+    property_get_sdk23("ro.boot.mid", bootmid);
 
     if (strstr(bootmid, "0PAJ50000")) {
         /* Sprint (mecwhl) */
@@ -108,6 +109,8 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
         property_set("ro.product.model", "HTC One_E8");
     }
 
-    property_get("ro.product.device", device);
+    set_props_from_build();
+
+    property_get_sdk23("ro.product.device", device);
     ERROR("Found bootmid %s setting build properties for %s device\n", bootmid, device);
 }
